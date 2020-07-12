@@ -21,15 +21,16 @@ router.post('/signin', async (req, res) => {
     return res.status(422).send({error: 'invalid password or email'});
   }
   const user = await User.findOne({email});
+
   if (!user) {
     res.status(404).send({error: 'email not found'});
-    try {
-      await user.comparePassword(password);
-      const token = jwt.sign({userId :user._id},'My_secret_key');
-      res.send({token});
-    } catch (err) {
-      return res.status(422).sebd({error: 'invalid password or email'});
-    }
+  }
+  try {
+    await user.comparePassword(password);
+    const token = jwt.sign({userId: user._id}, 'My_secret_key');
+    res.send({token});
+  } catch (err) {
+    return res.status(422).send({error: 'invalid password or email'});
   }
 });
 module.exports = router;
