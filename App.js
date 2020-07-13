@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 
 
+
 import {createAppContainer,createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
@@ -27,6 +28,7 @@ import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import AccountsScreen from './src/screens/AccountScreen';
 import TracklistScreen from './src/screens/Tracklistscreen';
 import TrackDetailsScreen from './src/screens/TrackDetailsScreen';
+import {Provider as AuthProvider} from './src/context/AuthContext';
 
 const switchNavigator = createSwitchNavigator({
   loginFlow: createStackNavigator({
@@ -48,4 +50,12 @@ const styles = StyleSheet.create({
 
 });
 
-export default createAppContainer(switchNavigator);
+const App =  createAppContainer(switchNavigator);
+
+export default () =>{
+  return(
+      <AuthProvider>
+        <App/>
+      </AuthProvider>
+  )
+}
